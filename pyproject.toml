@@ -1,0 +1,68 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ekstre"
+dynamic = ["version"]
+description = "Read Turkish bank statement exports (.xlsx, .xls, .csv) into clean, typed transactions: signed amounts, dates, FAST/EFT/POS/ATM type, counterparty and IBAN."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [
+    { name = "Arda Zeybek", email = "179981861+ardazeybek-dev@users.noreply.github.com" },
+]
+keywords = ["turkish", "bank", "statement", "ekstre", "hesap hareketleri", "excel", "csv", "iban", "fintech"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Natural Language :: Turkish",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Office/Business :: Financial :: Accounting",
+    "Typing :: Typed",
+]
+dependencies = ["openpyxl>=3.1"]
+
+[project.optional-dependencies]
+xls = ["xlrd>=2.0"]
+dev = ["pytest>=8", "ruff>=0.6", "xlrd>=2.0", "xlwt>=1.3"]
+
+[project.urls]
+Homepage = "https://github.com/ardazeybek-dev/ekstre"
+Repository = "https://github.com/ardazeybek-dev/ekstre"
+Issues = "https://github.com/ardazeybek-dev/ekstre/issues"
+
+[project.scripts]
+ekstre = "ekstre.cli:main"
+
+[tool.hatch.version]
+path = "src/ekstre/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ekstre"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/ekstre", "tests", "README.md", "LICENSE"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.format]
+exclude = ["*.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "src"]
+pythonpath = ["tests"]
+addopts = "-q --doctest-modules --import-mode=importlib"
